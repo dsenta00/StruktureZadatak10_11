@@ -5,7 +5,8 @@
 #define MAX_LIST_NAME (128)
 #define list_foreach(__p, __list) for (__p = list_first(__list); __p != NULL; __p = listNode_nextData(__p))
 
-typedef struct _list {
+typedef struct _list
+{
     char name[MAX_LIST_NAME];
     size_t count;
     ListNode head;

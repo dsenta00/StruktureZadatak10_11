@@ -10,19 +10,22 @@
  * @param population populacija grada
  * @return CityTreeP - alocirana memorija 
  */
-CityTreeP cityTree_createNode(char *cityName, int population) {
+CityTreeP cityTree_createNode(char *cityName, int population)
+{
     CityTreeP cityNode = NULL;
     City *city = NULL;
 
     city = city_create(cityName, population);
 
-    if (!city) {
+    if (!city)
+    {
         return NULL;
     }
 
     cityNode = malloc(sizeof(CityTree));
 
-    if (!cityNode) {
+    if (!cityNode)
+    {
         perror("City node not allocated!");
         free(city);
         return NULL;
@@ -42,20 +45,27 @@ CityTreeP cityTree_createNode(char *cityName, int population) {
  * @param cityNode cvor koji se unosi
  * @return cvor koji se unosi ako je trenutni cvor prazan, u suprotnom trenutni cvor
  */
-CityTreeP cityTree_insert(CityTreeP current, CityTreeP cityNode) {
+CityTreeP cityTree_insert(CityTreeP current, CityTreeP cityNode)
+{
     int result = 0;
-    
-    if (!current) {
+
+    if (!current)
+    {
         return cityNode;
     }
 
     result = city_compare(current->city, cityNode->city);
 
-    if (result < 0) {
+    if (result < 0)
+    {
         current->right = cityTree_insert(current->right, cityNode);
-    } else if (result > 0) {
+    }
+    else if (result > 0)
+    {
         current->left = cityTree_insert(current->left, cityNode);
-    } else {
+    }
+    else
+    {
         printf("City %s with population %d already exists!\r\n", cityNode->city->name, cityNode->city->population);
         cityTree_freeNode(cityNode);
     }
@@ -69,12 +79,15 @@ CityTreeP cityTree_insert(CityTreeP current, CityTreeP cityNode) {
  * @param cityNode cvor koji se brise 
  * @return EXIT_SUCCESS
  */
-int cityTree_freeNode(CityTreeP cityNode) {
-    if (!cityNode) {
+int cityTree_freeNode(CityTreeP cityNode)
+{
+    if (!cityNode)
+    {
         return EXIT_SUCCESS;
     }
 
-    if (cityNode->city) {
+    if (cityNode->city)
+    {
         free(cityNode->city);
         cityNode->city = NULL;
     }
@@ -89,8 +102,10 @@ int cityTree_freeNode(CityTreeP cityNode) {
  * @param current trenutni cvor 
  * @return NULL
  */
-CityTreeP cityTree_delete(CityTreeP current) {
-    if (!current) {
+CityTreeP cityTree_delete(CityTreeP current)
+{
+    if (!current)
+    {
         return NULL;
     }
 
@@ -106,8 +121,10 @@ CityTreeP cityTree_delete(CityTreeP current) {
  * @param current trenutni cvor
  * @return EXIT_SUCCESS
  */
-int cityTree_print(CityTreeP current) {
-    if (!current) {
+int cityTree_print(CityTreeP current)
+{
+    if (!current)
+    {
         return EXIT_SUCCESS;
     }
 
@@ -125,13 +142,16 @@ int cityTree_print(CityTreeP current) {
  * @param population populacija grada iznad kojeg ispisujemo
  * @return EXIT_SUCCESS
  */
-int cityTree_printBiggerThan(CityTreeP current, int population) {
-    if (!current) {
+int cityTree_printBiggerThan(CityTreeP current, int population)
+{
+    if (!current)
+    {
         return EXIT_SUCCESS;
     }
 
     cityTree_printBiggerThan(current->right, population);
-    if (current->city->population > population) {
+    if (current->city->population > population)
+    {
         printf("\t%s %d\r\n", current->city->name, current->city->population);
     }
     cityTree_printBiggerThan(current->left, population);

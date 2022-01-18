@@ -2,7 +2,8 @@
 
 #define MAX_CITY_NAME (256)
 
-typedef struct _city {
+typedef struct _city
+{
     char name[MAX_CITY_NAME];
     int population;
 } City;

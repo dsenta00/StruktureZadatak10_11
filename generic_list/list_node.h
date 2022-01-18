@@ -3,7 +3,8 @@
 
 struct _listNode;
 typedef struct _listNode *ListNodeP;
-typedef struct _listNode {
+typedef struct _listNode
+{
     ListNodeP next;
 } ListNode;
 

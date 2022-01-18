@@ -3,9 +3,10 @@
 
 #define MAX_STATE_NAME (256)
 
-typedef struct _state {
-    char name[MAX_STATE_NAME];   
-    char fileName[FILENAME_MAX]; 
+typedef struct _state
+{
+    char name[MAX_STATE_NAME];
+    char fileName[FILENAME_MAX];
 } State;
 
 /**

@@ -2,8 +2,9 @@
 #include "city.h"
 
 struct _cityTree;
-typedef struct _cityTree * CityTreeP;
-typedef struct _cityTree {
+typedef struct _cityTree *CityTreeP;
+typedef struct _cityTree
+{
     City *city;
     CityTreeP left;
     CityTreeP right;

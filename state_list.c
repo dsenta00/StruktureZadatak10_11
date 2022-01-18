@@ -10,12 +10,14 @@
  * @param stateFileName naziv datoteke drzave
  * @return alociran čvor
  */
-StateListP stateList_createNodeWithArgs(char *stateName, char *stateFileName) {
+StateListP stateList_createNodeWithArgs(char *stateName, char *stateFileName)
+{
     State *state = NULL;
     StateListP stateNode = NULL;
 
     state = state_create(stateName, stateFileName);
-    if (!state) {
+    if (!state)
+    {
         return NULL;
     }
 
@@ -28,11 +30,13 @@ StateListP stateList_createNodeWithArgs(char *stateName, char *stateFileName) {
  * @param state informacije o državi 
  * @return čvor države
  */
-StateListP stateList_create(State *state) {
+StateListP stateList_create(State *state)
+{
     StateListP stateNode = NULL;
 
     stateNode = malloc(sizeof(StateList));
-    if (!stateNode) {
+    if (!stateNode)
+    {
         perror("State node not allocated!\r\n");
         free(state);
         return NULL;
@@ -50,7 +54,8 @@ StateListP stateList_create(State *state) {
  * @param state informacije o državi
  * @return EXIT_SUCCESS
  */
-int stateList_initializeNode(StateListP stateNode, State *state) {
+int stateList_initializeNode(StateListP stateNode, State *state)
+{
     stateNode->state = state;
     stateNode->cityRoot = NULL;
     stateNode->next = NULL;
@@ -65,7 +70,8 @@ int stateList_initializeNode(StateListP stateNode, State *state) {
  * @param stateNode čvor kojeg treba uvezati
  * @return EXIT_SUCCESS
  */
-int stateList_insertAfter(StateListP position, StateListP stateNode) {
+int stateList_insertAfter(StateListP position, StateListP stateNode)
+{
     stateNode->next = position->next;
     position->next = stateNode;
 
@@ -79,12 +85,14 @@ int stateList_insertAfter(StateListP position, StateListP stateNode) {
  * @param stateNode čvor kojeg treba uvezat
  * @return EXIT_SUCCESS
  */
-int stateList_insertSorted(StateListP head, StateListP stateNode) {
+int stateList_insertSorted(StateListP head, StateListP stateNode)
+{
     StateListP temp = NULL;
 
-    for (temp = head; 
-         temp->next != NULL && strcmp(temp->next->state->name, stateNode->state->name) < 0; 
-         temp = temp->next);
+    for (temp = head;
+         temp->next != NULL && strcmp(temp->next->state->name, stateNode->state->name) < 0;
+         temp = temp->next)
+        ;
 
     return stateList_insertAfter(temp, stateNode);
 }
@@ -95,12 +103,15 @@ int stateList_insertSorted(StateListP head, StateListP stateNode) {
  * @param stateNode čvor kojeg treba pobrisat
  * @return EXIT_SUCCESS
  */
-int stateList_freeNode(StateListP stateNode) {
-    if (!stateNode) {
+int stateList_freeNode(StateListP stateNode)
+{
+    if (!stateNode)
+    {
         return EXIT_SUCCESS;
     }
 
-    if (stateNode->state) {
+    if (stateNode->state)
+    {
         free(stateNode->state);
         stateNode->state = NULL;
     }
@@ -118,12 +129,14 @@ int stateList_freeNode(StateListP stateNode) {
  * @param position pozicija čvor prije onog kojeg želimo pobrisat
  * @return EXIT_SUCCESS
  */
-int stateList_deleteNodeAfter(StateListP position) {
+int stateList_deleteNodeAfter(StateListP position)
+{
     StateListP state = NULL;
 
     state = position->next;
 
-    if (!state) {
+    if (!state)
+    {
         return EXIT_SUCCESS;
     }
 
@@ -137,11 +150,13 @@ int stateList_deleteNodeAfter(StateListP position) {
  * @param head glava vezane liste
  * @return EXIT_SUCCESS
  */
-int stateList_deleteAll(StateListP head) {
-    while (head->next) {
+int stateList_deleteAll(StateListP head)
+{
+    while (head->next)
+    {
         stateList_deleteNodeAfter(head);
     }
-     
+
     return EXIT_SUCCESS;
 }
 
@@ -151,10 +166,12 @@ int stateList_deleteAll(StateListP head) {
  * @param head glava vezane liste
  * @return EXIT_SUCCESS
  */
-int stateList_print(StateListP head) {
+int stateList_print(StateListP head)
+{
     StateListP current = NULL;
 
-    for (current = head->next; current != NULL; current = current->next) {
+    for (current = head->next; current != NULL; current = current->next)
+    {
         printf("State %s from file %s;\r\n", current->state->name, current->state->fileName);
         cityTree_print(current->cityRoot);
     }
@@ -169,11 +186,14 @@ int stateList_print(StateListP head) {
  * @param name ime države koju tražimo
  * @return adresu čvora ako je pronađen, u suprotnom NULL
  */
-StateListP stateList_findByName(StateListP head, char *name) {
+StateListP stateList_findByName(StateListP head, char *name)
+{
     StateListP current = NULL;
 
-    for (current = head->next; current != NULL; current = current->next) {
-        if (strcmp(current->state->name, name) == 0) {
+    for (current = head->next; current != NULL; current = current->next)
+    {
+        if (strcmp(current->state->name, name) == 0)
+        {
             return current;
         }
     }

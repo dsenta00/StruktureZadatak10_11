@@ -14,10 +14,12 @@
  * @param city2 drugi grad
  * @return manje od nula ako je city1 < city2, nula ako su city1 == city2, više od nula ako je city1 > city2
  */
-int city_compare(City *city1, City *city2) {
+int city_compare(City *city1, City *city2)
+{
     int result = city1->population - city2->population;
 
-    if (result == 0) {
+    if (result == 0)
+    {
         result = strcmp(city1->name, city2->name);
     }
 
@@ -31,12 +33,14 @@ int city_compare(City *city1, City *city2) {
  * @param population populacija grada
  * @return alociran grad
  */
-City *city_create(char *name, int population) {
+City *city_create(char *name, int population)
+{
     City *city = NULL;
 
     city = malloc(sizeof(City));
 
-    if (!city) {
+    if (!city)
+    {
         perror("City failed to allocate!");
         return NULL;
     }

@@ -14,23 +14,27 @@ static char userPicksZadatak();
  * @param argv niz argumenata
  * @return EXIT_SUCCESS ako je program uspio s radom, u suprotnom vrati EXIT_FAILURE
  */
-int main(int argc, char **argv) {
-	switch (userPicksZadatak()) {
-		case 'A':
-			return zadatak10a();
-		case 'B':
-			return zadatak11();
-		default:
-			break;
+int main(int argc, char **argv)
+{
+	switch (userPicksZadatak())
+	{
+	case 'A':
+		return zadatak10a();
+	case 'B':
+		return zadatak11();
+	default:
+		break;
 	}
 
 	return EXIT_SUCCESS;
 }
 
-static char userPicksZadatak() {
+static char userPicksZadatak()
+{
 	char choice = 0;
 
-	while (true) {
+	while (true)
+	{
 		printf("Choose zadatak:\r\n");
 		printf(" a) ........ Zadatak 10 pod a\r\n");
 		printf(" b)  ....... Zadatak 11\r\n");
@@ -40,12 +44,15 @@ static char userPicksZadatak() {
 
 		choice = toupper(getchar());
 
-		switch (choice) {
-			case 'A': case 'B': case '\e':
-				return choice;
-			default:
-				printf("Wrong choice! Try again!\r\n");
-				break;
+		switch (choice)
+		{
+		case 'A':
+		case 'B':
+		case '\e':
+			return choice;
+		default:
+			printf("Wrong choice! Try again!\r\n");
+			break;
 		}
 	}
 }

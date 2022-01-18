@@ -39,15 +39,17 @@ static int stateQuery(StateHashTableP stateHashTable);
  * 
  * @return EXIT_SUCCESS ako je uspilo, u suprotnom EXIT_FAILURE
  */
-int zadatak11() {
+int zadatak11()
+{
 	StateHashTableP stateHashTable = NULL;
 	FILE *fp = NULL;
 	int status = 0;
-	char fileName[FILENAME_MAX] = { 0 };
+	char fileName[FILENAME_MAX] = {0};
 
 	stateHashTable = stateHashTable_create();
 
-	if (!stateHashTable) {
+	if (!stateHashTable)
+	{
 		return EXIT_FAILURE;
 	}
 
@@ -55,14 +57,15 @@ int zadatak11() {
 	scanf(" %s", fileName);
 	status = readStatesFromFile(stateHashTable, fileName);
 
-	if (status != EXIT_SUCCESS) {
+	if (status != EXIT_SUCCESS)
+	{
 		printf("Failed to read file %s!\r\n", fileName);
 		return EXIT_FAILURE;
 	}
 
 	stateHashTable_print(stateHashTable);
 	stateQuery(stateHashTable);
-	stateHashTable_delete(stateHashTable);	
+	stateHashTable_delete(stateHashTable);
 
 	return EXIT_SUCCESS;
 }
@@ -73,32 +76,36 @@ int zadatak11() {
  * @param stateFile datoteka s gradovima
  * @return root stabla 
  */
-static CityTreeP readCitiesFromFile(char *stateFile) {
+static CityTreeP readCitiesFromFile(char *stateFile)
+{
 	CityTreeP root = NULL;
 	FILE *fp = NULL;
-    char cityName[MAX_CITY_NAME] = { 0 };
-    int cityPopulation = 0;
+	char cityName[MAX_CITY_NAME] = {0};
+	int cityPopulation = 0;
 
 	fp = fopen(stateFile, "r");
 
-	if (!fp) {
+	if (!fp)
+	{
 		perror("File not opened!\r\n");
 		return NULL;
 	}
 
-	while (!feof(fp)) {
+	while (!feof(fp))
+	{
 		CityTreeP city = NULL;
 		fscanf(fp, " %s %d", cityName, &cityPopulation);
-		city = cityTree_createNode(cityName,cityPopulation);
+		city = cityTree_createNode(cityName, cityPopulation);
 
-		if (!city) {
+		if (!city)
+		{
 			root = cityTree_delete(root);
 			return NULL;
 		}
 
 		root = cityTree_insert(root, city);
 	}
-	
+
 	fclose(fp);
 	return root;
 }
@@ -110,24 +117,28 @@ static CityTreeP readCitiesFromFile(char *stateFile) {
  * @param statesFile datoteka s državama
  * @return EXIT_SUCCESS ako je sve ok, u suprotnom EXIT_FAILURE
  */
-static int readStatesFromFile(StateHashTableP stateHashTable, char *statesFile) {
+static int readStatesFromFile(StateHashTableP stateHashTable, char *statesFile)
+{
 	FILE *fp = NULL;
-	char statesName[MAX_STATE_NAME] = { 0 };   
-    char statesFileName[FILENAME_MAX] = { 0 }; 
+	char statesName[MAX_STATE_NAME] = {0};
+	char statesFileName[FILENAME_MAX] = {0};
 
 	fp = fopen(statesFile, "r");
 
-	if (!fp) {
+	if (!fp)
+	{
 		perror("File not opened!\r\n");
 		return EXIT_FAILURE;
 	}
 
-	while (!feof(fp)) {
+	while (!feof(fp))
+	{
 		StateListP stateNode = NULL;
 		fscanf(fp, " %s %s", statesName, statesFileName);
 		stateNode = stateList_createNodeWithArgs(statesName, statesFileName);
 
-		if (!stateNode) {
+		if (!stateNode)
+		{
 			stateHashTable_delete(stateHashTable);
 			return EXIT_FAILURE;
 		}
@@ -135,7 +146,7 @@ static int readStatesFromFile(StateHashTableP stateHashTable, char *statesFile) 
 		stateNode->cityRoot = readCitiesFromFile(stateNode->state->fileName);
 		stateHashTable_insertStateNode(stateHashTable, stateNode);
 	}
-	
+
 	fclose(fp);
 	return EXIT_SUCCESS;
 }
@@ -146,24 +157,29 @@ static int readStatesFromFile(StateHashTableP stateHashTable, char *statesFile) 
  * @param stateHashTable hash tablica
  * @return EXIT_SUCCESS
  */
-static int stateQuery(StateHashTableP stateHashTable) {
-	char stateToFind[MAX_STATE_NAME] = { 0 };
+static int stateQuery(StateHashTableP stateHashTable)
+{
+	char stateToFind[MAX_STATE_NAME] = {0};
 	int populationMin = 0;
 	StateListP state = NULL;
 
-	while (true) {
+	while (true)
+	{
 		printf("Insert state to find -> ");
 		scanf(" %s", stateToFind);
 
 		state = stateHashTable_findStateNode(stateHashTable, stateToFind);
 
-		if (!state) {
+		if (!state)
+		{
 			printf("State %s not found, please try again!\r\n", stateToFind);
-		} else {
+		}
+		else
+		{
 			break;
 		}
 	}
-	
+
 	printf("Insert minimal city population to print -> ");
 	scanf(" %d", &populationMin);
 

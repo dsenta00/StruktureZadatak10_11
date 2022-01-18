@@ -8,18 +8,21 @@
  * 
  * @return alociranu hash tablicu
  */
-StateHashTableP stateHashTable_create() {
+StateHashTableP stateHashTable_create()
+{
     int i = 0;
     StateHashTableP stateHashTable = NULL;
 
     stateHashTable = malloc(sizeof(StateHashTable));
 
-    if (!stateHashTable) {
+    if (!stateHashTable)
+    {
         perror("Error creating State hash table");
         return NULL;
     }
 
-    for (i = 0; i < STATE_HASH_TABLE_SIZE; i++) {
+    for (i = 0; i < STATE_HASH_TABLE_SIZE; i++)
+    {
         stateList_initializeNode(&stateHashTable->table[i], NULL);
     }
 
@@ -33,7 +36,8 @@ StateHashTableP stateHashTable_create() {
  * @param stateNode čvor države 
  * @return EXIT_SUCCESS 
  */
-int stateHashTable_insertStateNode(StateHashTableP stateHashTable, StateListP stateNode) {
+int stateHashTable_insertStateNode(StateHashTableP stateHashTable, StateListP stateNode)
+{
     int i = state_hashFunction(stateNode->state) % STATE_HASH_TABLE_SIZE;
 
     return stateList_insertSorted(&stateHashTable->table[i], stateNode);
@@ -45,10 +49,12 @@ int stateHashTable_insertStateNode(StateHashTableP stateHashTable, StateListP st
  * @param stateHashTable hash tablica
  * @return EXIT_SUCCESS 
  */
-int stateHashTable_print(StateHashTableP stateHashTable) {
+int stateHashTable_print(StateHashTableP stateHashTable)
+{
     int i = 0;
 
-    for (i = 0; i < STATE_HASH_TABLE_SIZE; i++) {
+    for (i = 0; i < STATE_HASH_TABLE_SIZE; i++)
+    {
         stateList_print(&stateHashTable->table[i]);
     }
 
@@ -62,7 +68,8 @@ int stateHashTable_print(StateHashTableP stateHashTable) {
  * @param stateToFind drzava za pronac
  * @return cvor države iz neke od vezanih lista ako postoji, u suprotnom NULL 
  */
-StateListP stateHashTable_findStateNode(StateHashTableP stateHashTable, char *stateToFind) {
+StateListP stateHashTable_findStateNode(StateHashTableP stateHashTable, char *stateToFind)
+{
     int i = state_hashFunctionFromString(stateToFind) % STATE_HASH_TABLE_SIZE;
 
     return stateList_findByName(&stateHashTable->table[i], stateToFind);
@@ -74,13 +81,16 @@ StateListP stateHashTable_findStateNode(StateHashTableP stateHashTable, char *st
  * @param stateHashTable hash tablica
  * @return EXIT_SUCCESS
  */
-int stateHashTable_delete(StateHashTableP stateHashTable) {
-    if (!stateHashTable) {
+int stateHashTable_delete(StateHashTableP stateHashTable)
+{
+    if (!stateHashTable)
+    {
         return EXIT_SUCCESS;
     }
 
-    for (int i = 0; i < STATE_HASH_TABLE_SIZE; i++) {
-        stateList_deleteAll(&stateHashTable->table[i]); 
+    for (int i = 0; i < STATE_HASH_TABLE_SIZE; i++)
+    {
+        stateList_deleteAll(&stateHashTable->table[i]);
     }
 
     free(stateHashTable);

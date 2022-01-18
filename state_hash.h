@@ -5,7 +5,8 @@
 
 struct _stateHashTable;
 typedef struct _stateHashTable *StateHashTableP;
-typedef struct _stateHashTable {
+typedef struct _stateHashTable
+{
     StateList table[STATE_HASH_TABLE_SIZE];
 } StateHashTable;
 

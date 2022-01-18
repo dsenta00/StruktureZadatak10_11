@@ -4,7 +4,8 @@
 
 struct _stateList;
 typedef struct _stateList *StateListP;
-typedef struct _stateList {
+typedef struct _stateList
+{
     State *state;
     StateListP next;
     CityTreeP cityRoot;
